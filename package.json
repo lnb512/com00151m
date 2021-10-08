@@ -1,0 +1,23 @@
+{
+  "name": "com00151m",
+  "version": "1.0.0",
+  "description": "COM00151M Final Project Artifact",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lnb512/com00151m.git"
+  },
+  "author": "lnb512@york.ac.uk",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/lnb512/com00151m/issues"
+  },
+  "homepage": "https://github.com/lnb512/com00151m#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "problem-json": "^0.3.0"
+  }
+}

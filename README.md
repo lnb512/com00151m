@@ -13,6 +13,9 @@ git clone https://github.com/lnb512/com00151m.git
 cd node-js-sample
 npm install
 npm start
+
+node app.js
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+# Your app should now be running on [localhost:3000]
+Load http://localhost:3000 on your client (browser) to send request to HTTP Microservice.

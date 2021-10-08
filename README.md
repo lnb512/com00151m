@@ -16,6 +16,6 @@ npm install
 node app.js
 ```
 
-# Your app should now be running on [localhost:3000]
+# Your app should now be running locally.
 Load http://localhost:3000 on your client (browser) to send request to HTTP Microservice.
 The HTTP Problem Details Response will be sent to your terminal console. 

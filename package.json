@@ -16,7 +16,11 @@
     "url": "https://github.com/lnb512/com00151m/issues"
   },
   "homepage": "https://github.com/lnb512/com00151m#readme",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
   "devDependencies": {
     "problem-json": "^0.3.0"
   }

@@ -1,8 +1,9 @@
 # COM00151M final project repository.
 # It contains source code for an HTTP Microservices REST API and client application.
 
-## This HTTP Microservice leverages the Problem Details [RFC 7807 HTTP] (https://datatracker.ietf.org/doc/html/rfc7807) specification to return detailed HTTP errors to the client application, for improved troubleshooting. 
+## This HTTP Microservice leverages the Problem Details RFC 7807 HTTP specification to return detailed HTTP errors to the client application, for improved troubleshooting. 
  
+RFC7807 can be found [here](https://datatracker.ietf.org/doc/html/rfc7807).
 
 ## Running Locally
 

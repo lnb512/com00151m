@@ -1,3 +1,17 @@
+/**
+ * Author: lnb512@york.ac.uk
+ * Project: COM00151M Final Project
+ * Date: 08.10.2021
+ * 
+ * This REST API MICROSERVICE processes a client POST (REQUEST) of student details.
+ * It validates the input and responds with HTTP 200 if the validation passes. Else is returns a 
+ * 400 error code to the client.
+ * 
+ * This MICROSERVICES uses the RFC7807 HTTP specification for error handling. It describes in details the error encountered
+ * and the causes. Providing the client enough information for error handling.
+ *  
+ */
+
 const express = require('express');
 const httpProblem = require('problem-json');
 const bodyParser = require('body-parser');
@@ -7,7 +21,7 @@ const app = express();
 app.use(express.json())    // <==== parse request body as JSON
 app.use(cors())
 
-const port = 3000;
+const port = 3001;
 
 app.post('/', (req, res) => { 
     if ((Object.keys(req.body).length == 0) || 

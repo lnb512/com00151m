@@ -19,3 +19,8 @@ node app.js
 # Your app should now be running locally.
 Load http://localhost:3000 on your client (browser) to send request to HTTP Microservice.
 The HTTP Problem Details Response will be sent to your terminal console. 
+
+# Use Postman API client to trigger the HTTP Microservice REST API
+Make sure you have [Postman](https://www.postman.com/downloads/) installed. 
+Send a GET request to http://localhost:3000
+The response will appear thereafter.

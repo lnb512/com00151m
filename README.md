@@ -22,4 +22,4 @@ The HTTP Problem Details Response will be sent to your terminal console.
 
 # Use Postman API client to trigger the HTTP Microservice REST API
 Make sure you have [Postman](https://www.postman.com/downloads/) installed. 
-Send a GET request to http://localhost:3000 and the response will appear thereafter.
+Send a GET request to http://localhost:3000 and the response will appear below your request.

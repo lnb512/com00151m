@@ -4,24 +4,30 @@ const httpProblem = require('problem-json');
 const port = 3000;
 
 //accept client request 
-const server = http.createServer(function(req, res) {
+const server = http.createServer(function(req, res) { 
 
+    // extend error description
     const extension = new httpProblem.Extension({
-        balance: 30,
-        accounts: ['/account/12345', '/account/67890']
+        firstName: 'Cannot be blank.',
+        lastName: 'Cannot be blank.', 
+        studentNumber: 'Must be numeric',  
     });
     
+    // problem details (incl. extension)
     const doc = new httpProblem.Document({
-        type: 'https://example.com/probs/out-of-credit',
-        title: 'You do not have enough credit.',
-        detail: 'You are low on cash',
-        instance: '/sales/products/available',
+        type: 'https://york.ac.uk/students/registration-exception',
+        title: 'Validation error.',
+        detail: 'Student registration request parameters failed to validate.',
+        instance: 'york.ac.uk/students/registrations',
         status: 400,
     }, extension);
 
-    console.log(doc);
-    res.writeHead(200);
-    res.end(); 
+    // send Response to client
+    res.writeHead(400, 'Student registration request parameters failed to validate.', {
+        'Content-Type': 'application/problem+json',
+        'Content-Language': 'en', 
+    });
+    res.end(JSON.stringify(doc)); 
 }); 
 
 

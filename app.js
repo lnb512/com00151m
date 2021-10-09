@@ -4,12 +4,11 @@
  * Date: 08.10.2021
  * 
  * This REST API MICROSERVICE processes a client POST (REQUEST) of student details.
- * It validates the input and responds with HTTP 200 if the validation passes. Else is returns a 
- * 400 error code to the client.
+ * It validates the input and responds with HTTP 200 if the validation passes. 
+ * Else it returns an RFC7807 specification 400 HTTP error response to the client.   
  * 
- * This MICROSERVICES uses the RFC7807 HTTP specification for error handling. It describes in details the error encountered
- * and the causes. Providing the client enough information for error handling.
- *  
+ * This MICROSERVICE uses the RFC7807 HTTP specification for error handling. It describes in details the error encountered
+ * and the causes. Providing the client with enough information for error handling.
  */
 
 const express = require('express');
@@ -20,9 +19,7 @@ const app = express();
 app.use(express.json())    // parse request body as JSON
 app.use(cors());           // all for all CORS
 
-
 const port = 3001;         // port number of microservice
-
 
 // handle client POST REQUEST
 app.post('/', (req, res) => {   
@@ -44,7 +41,7 @@ app.post('/', (req, res) => {
                 status: 400,
             }, extension);
 
-            // send RESPONSE back to client
+            // send RFC7807 HTTP specification RESPONSE back to client
             res.writeHead(400, 
                 'Student registration request parameters failed to validate.', {
                 'Content-Type': 'application/problem+json',

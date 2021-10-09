@@ -13,28 +13,26 @@
  */
 
 const express = require('express');
-const httpProblem = require('problem-json');
-const bodyParser = require('body-parser');
+const httpProblem = require('problem-json'); 
 const cors = require('cors');
 
 const app = express(); 
-app.use(express.json())    // <==== parse request body as JSON
-app.use(cors())
+app.use(express.json())    // parse request body as JSON
+app.use(cors());           // all for all CORS
 
-const port = 3001;
 
-app.post('/', (req, res) => { 
-    if ((Object.keys(req.body).length == 0) || 
-        (!req.body.firstName) ||
-        (!req.body.lastName) ||
-        (!req.body.studentNumber)) {
-            // extend error description  
+const port = 3001;         // port number of microservice
+
+
+// handle client POST REQUEST
+app.post('/', (req, res) => {   
+
+    if ((Object.keys(req.body).length == 0) || (!req.body.firstName) || (!req.body.lastName) || (!req.body.studentNumber)) {
+            // error encountered
+            // use RFC7807 HTTP specification for RESPONSE 
+            ///         extend error description  
             const extension = new httpProblem.Extension({
-                invalidParms: [{
-                    firstName: 'Cannot be blank.',
-                    lastName: 'Cannot be blank.', 
-                    studentNumber: 'Must be numeric',  
-                }]
+                invalidParms: [{ firstName: 'Cannot be blank.', lastName: 'Cannot be blank.', studentNumber: 'Must be numeric' }]
             });
     
             // problem details (incl. extension)
@@ -46,24 +44,22 @@ app.post('/', (req, res) => {
                 status: 400,
             }, extension);
 
-            // send Response back to client
-            res.writeHead(400, 'Student registration request parameters failed to validate.', {
+            // send RESPONSE back to client
+            res.writeHead(400, 
+                'Student registration request parameters failed to validate.', {
                 'Content-Type': 'application/problem+json',
                 'Content-Language': 'en', 
             });
             res.end(JSON.stringify(doc)); 
         }  else { 
-            let Resp = {
-                "firstName": req.body.firstName,
-                "lastName": req.body.lastName,
-                "studentNumber": req.body.studentNumber
+            // student details validation was successful
+            let resp = {
+                "firstName": req.body.firstName, "lastName": req.body.lastName, "studentNumber": req.body.studentNumber
             }
         
-            res.set({ 
-                'Content-Type': 'application/json'
-            }); 
+            res.set({ 'Content-Type': 'application/json' }); 
             res.statusMessage = "Student details validated.";
-            res.send(JSON.stringify(Resp));
+            res.send(JSON.stringify(resp));
         }
 });
  

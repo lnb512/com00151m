@@ -7,6 +7,8 @@
  * It validates the input and responds with HTTP 200 if the validation passes. 
  * Else it returns an RFC7807 specification 400 HTTP error response to the client.   
  * 
+ * The client sends an "application/problem+json" as Content-Type, with the API returning a problem details response
+ * 
  * This MICROSERVICE uses the RFC7807 HTTP specification for error handling. It describes in details the error encountered
  * and the causes. Providing the client with enough information for error handling.
  */
@@ -15,21 +17,42 @@ const express = require('express');
 const httpProblem = require('problem-json'); 
 const cors = require('cors');
 
-const app = express(); 
-app.use(express.json())    // parse request body as JSON
+const app = express();  
 app.use(cors());           // all for all CORS
 
 const port = 3001;         // port number of microservice
 
-// handle client POST REQUEST
-app.post('/', (req, res) => {   
+// middleware to access raw HTTP client data 
+// and prepare for API
+app.use((req, res, next) => {
+    var data = '';
+    req.setEncoding('utf8');
+    req.on('data', (chunk) => { 
+       data += chunk;
+    });
 
-    if ((Object.keys(req.body).length == 0) || (!req.body.firstName) || (!req.body.lastName) || (!req.body.studentNumber)) {
+    req.on('end', () => {
+        req.body = data;
+        next();
+    });
+});
+
+// handle client POST REQUEST
+app.post('/', (req, res) => {    
+
+    let data = JSON.parse(req.body);            // get raw client request from middleware 
+    console.log(data['firstName']);
+
+    if (Object.keys(req.body).length == 0) {
             // error encountered
             // use RFC7807 HTTP specification for RESPONSE 
             ///         extend error description  
             const extension = new httpProblem.Extension({
-                invalidParms: [{ firstName: 'Cannot be blank.', lastName: 'Cannot be blank.', studentNumber: 'Must be numeric' }]
+                invalidParms: [{ 
+                    firstName: 'Cannot be blank.', 
+                    lastName: 'Cannot be blank.', 
+                    studentNumber: 'Must be numeric' 
+                }]
             });
     
             // problem details (incl. extension)
@@ -51,10 +74,12 @@ app.post('/', (req, res) => {
         }  else { 
             // student details validation was successful
             let resp = {
-                "firstName": req.body.firstName, "lastName": req.body.lastName, "studentNumber": req.body.studentNumber
+                "firstName": req.body['firstName'], 
+                "lastName": req.body['lastName'], 
+                "studentNumber": req.body['studentNumber']
             }
         
-            res.set({ 'Content-Type': 'application/json' }); 
+            res.set({ 'Content-Type': 'application/problem+json' }); 
             res.statusMessage = "Student details validated.";
             res.send(JSON.stringify(resp));
         }

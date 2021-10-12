@@ -3,13 +3,14 @@
  * Project: COM00151M Final Project
  * Date: 08.10.2021
  * 
- * This REST API MICROSERVICE processes a client POST (REQUEST) of student details.
+ * This HTTP REST MICROSERVICE API processes a client POST (REQUEST) of student details.
  * It validates the input and responds with HTTP 200 if the validation passes. 
  * Else it returns an RFC7807 specification 400 HTTP error response to the client.   
  * 
- * The client sends an "application/problem+json" as Content-Type, with the API returning a problem details response
+ * The client sends an RFC7808 specification "application/problem+json" payload as 'Content-Type', 
+ * with the API returning a problem details "application/problem+json" response back to the client. 
  * 
- * This MICROSERVICE uses the RFC7807 HTTP specification for error handling. It describes in details the error encountered
+ * The RFC7807 HTTP specification describes in detail the error encountered
  * and the causes. Providing the client with enough information for error handling.
  */
 

@@ -25,6 +25,8 @@ const port = 3001;         // port number of microservice
 
 // middleware to access raw HTTP client data 
 // and prepare for API
+
+
 app.use((req, res, next) => {
     var data = '';
     req.setEncoding('utf8');
@@ -39,7 +41,10 @@ app.use((req, res, next) => {
 });
 
 // handle client POST REQUEST
-app.post('/', (req, res) => {    
+app.post('/', (req, res) => {   
+    
+    console.log(req.body); 
+
     if ((req.headers['content-type']) != ("application/problem+json")) {
         res.status(400);
         res.send('Invalid Content-Type received - Expected RFC7808 specification');  

@@ -40,9 +40,16 @@ app.use((req, res, next) => {
 
 // handle client POST REQUEST
 app.post('/', (req, res) => {    
+    if ((req.headers['content-type']) != ("application/problem+json")) {
+        res.status(400);
+        res.send('Invalid Content-Type received - Expected RFC7808 specification');  
+    }
 
-    let data = JSON.parse(req.body);            // get raw client request from middleware 
-    console.log(data['firstName']);
+    if (req.body) {
+        let data = JSON.parse(req.body);            // get raw client request from middleware 
+        console.log(data['firstName']);     
+    }
+
 
     if (Object.keys(req.body).length == 0) {
             // error encountered
@@ -80,9 +87,11 @@ app.post('/', (req, res) => {
                 "studentNumber": req.body['studentNumber']
             }
         
-            res.set({ 'Content-Type': 'application/problem+json' }); 
-            res.statusMessage = "Student details validated.";
-            res.send(JSON.stringify(resp));
+            //res.set({ 'Content-Type': 'application/problem+json' });   // ensure payload in RFC7808
+            //res.statusMessage = "Student details validated OK";
+            res.status(201);
+            res.send("Student details validated OK");  
+            //res.send(JSON.stringify(resp));
         }
 });
  

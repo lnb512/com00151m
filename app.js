@@ -45,6 +45,7 @@ app.post('/', (req, res) => {
     
     console.log(req.body); 
 
+    // ensure client and server default to RFC7808 communication
     if ((req.headers['content-type']) != ("application/problem+json")) {
         res.status(400);
         res.send('Invalid Content-Type received - Expected RFC7808 specification');  
